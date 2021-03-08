@@ -1,0 +1,3 @@
+[submodule "pangolin"]
+	path = pangolin
+	url = git@github.com:cov-lineages/pangolin.git
