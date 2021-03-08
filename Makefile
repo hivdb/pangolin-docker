@@ -1,4 +1,5 @@
 SHELL=/bin/bash
+VERSION = $(shell date -u +"%Y%m%d%H%M%S")
 
 # build-origimage: pangolin
 # 	@docker build -t hivdb/pangolin-orig:latest pangolin
@@ -27,4 +28,7 @@ login:
 
 release: login
 	@docker tag hivdb/pangolin-lambda:latest 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:latest
+	@docker tag hivdb/pangolin-lambda:latest 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:${VERSION}
 	@docker push 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:latest
+	@docker push 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:${VERSION}
+	@echo ${VERSION} > .latest_version
