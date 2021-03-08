@@ -1,13 +1,19 @@
 import csv
 import json
+import boto3
+import hashlib
 import subprocess
 from datetime import datetime
 
 from pangolin import __version__ as pangolin_version
+from pangoLEARN import __version__ as pangoLEARN_version
 
 
 def main(event, context):
+    version = 'pangolin: {}; pangoLEARN: {}'.format(
+        pangolin_version, pangoLEARN_version)
     fasta = event.get('body') or ''
+    runhash = hashlib.sha512(fasta.encode('utf-8')).hexdigest()
     with open('/tmp/input.fasta', 'w') as fp:
         fp.write(fasta)
     proc = subprocess.run(
@@ -19,8 +25,9 @@ def main(event, context):
         encoding='UTF-8'
     )
     results = {
-        "pangolin_version": pangolin_version,
-        "report_timestamp": datetime.utcnow().isoformat() + "Z",
+        "runHash": runhash,
+        "version": version,
+        "reportTimestamp": datetime.utcnow().isoformat() + "Z",
         "returncode": proc.returncode,
         "stdout": proc.stdout,
         "stderr": proc.stderr,
@@ -29,12 +36,23 @@ def main(event, context):
         rows = []
         for row in csv.DictReader(fp):
             row['probability'] = float(row['probability'])
+            row.pop('pangoLEARN_version')
             rows.append(row)
         results['reports'] = rows
+    body = json.dumps(results)
+    s3_client = boto3.client('s3')
+    s3_client.put_object(
+        Body=version.encode('utf-8'),
+        Bucket='pangolin-assets.hivdb.org',
+        Key='latest_version')
+    s3_client.put_object(
+        Body=body.encode('utf-8'),
+        Bucket='pangolin-assets.hivdb.org',
+        Key='reports/{}.json'.format(runhash))
     return {
         'statusCode': 200,
         'header': {
             'Content-Type': 'application/json'
         },
-        'body': json.dumps(results)
+        'body': body
     }

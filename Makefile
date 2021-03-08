@@ -17,7 +17,9 @@ shell:
 		--entrypoint /bin/bash hivdb/pangolin-lambda:latest 
 
 emulate:
-	docker run -p 9015:8080 hivdb/pangolin-lambda:latest 
+	docker run \
+		--volume ~/.aws:/root/.aws:ro \
+		-p 9015:8080 hivdb/pangolin-lambda:latest 
 
 login:
 	@aws ecr get-login-password --region us-west-2 | \
