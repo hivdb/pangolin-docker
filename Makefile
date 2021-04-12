@@ -8,7 +8,7 @@ VERSION = $(shell date -u +"%Y%m%d%H%M%S")
 # 	@docker run --rm -it hivdb/pangolin-orig:latest bash
 
 build:
-	@docker build -t hivdb/pangolin-lambda:latest .
+	@docker build --no-cache -t hivdb/pangolin-lambda:latest .
 
 shell:
 	@docker run \
