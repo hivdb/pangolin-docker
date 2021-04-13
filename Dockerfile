@@ -1,7 +1,7 @@
 FROM public.ecr.aws/lambda/python:3.8 as installer
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ARG MINIMAP2_VER=2.17
-RUN yum install -y tar bzip2 && \
+RUN yum install -y which tar bzip2 && \
     mkdir -p /opt/minimap2 && \
     curl -sSL https://github.com/lh3/minimap2/releases/download/v${MINIMAP2_VER}/minimap2-${MINIMAP2_VER}_x64-linux.tar.bz2 -o minimap2.tar.bz2 && \
     tar -xf minimap2.tar.bz2 -C /opt/minimap2 --strip-components 1 && \
@@ -21,6 +21,8 @@ RUN mv /python-packages/bin /python-scripts
 
 FROM public.ecr.aws/lambda/python:3.8
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+COPY --from=installer /usr/bin/which /usr/bin/which
 COPY --from=installer /opt/minimap2 /opt/minimap2
 COPY --from=installer /usr/bin/minimap2 /usr/bin/gofasta /usr/bin/
 COPY --from=installer /python-scripts/ /var/lang/bin/
