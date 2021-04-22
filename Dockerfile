@@ -12,11 +12,11 @@ RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofast
     chmod +x /usr/bin/gofasta
 COPY pangolin pangolin
 ARG SNAKEMAKE_VER=5.13.0
-RUN yum install -y git && \
-    pip install --target /python-packages \
+ARG PANGOLEARN_VER=2021-04-21
+RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
         pangolin/ \
-        git+https://github.com/cov-lineages/pangoLEARN.git
+        https://github.com/cov-lineages/pangoLEARN/archive/refs/tags/${PANGOLEARN_VER}.tar.gz
 RUN mv /python-packages/bin /python-scripts
 
 FROM public.ecr.aws/lambda/python:3.8
