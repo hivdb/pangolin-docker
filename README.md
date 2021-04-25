@@ -77,7 +77,7 @@ make emulate
 
 This make command will emulate a web server that provides the exact web API
 deployed on AWS Lambda. The web API listens on port 9015 of the Docker host
-machine. For more information, visit [this AWS instruction][lambda-test]
+machine. For more information, visit [this AWS instruction][lambda-test].
 
 Note: this command requires AWS config and credentials.
 
@@ -104,6 +104,8 @@ make deploy
 
 This make command will deploy the **released** Docker image to an existing AWS
 Lambda function.
+
+Note: this command requires AWS config and credentials.
 
 
 ## API Interface
