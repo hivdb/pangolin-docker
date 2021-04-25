@@ -18,7 +18,7 @@ shell:
 		--entrypoint /bin/bash hivdb/pangolin-lambda:latest 
 
 emulate:
-	docker run \
+	@docker run \
 		--volume ~/.aws:/root/.aws:ro \
 		-p 9015:8080 hivdb/pangolin-lambda:latest 
 
