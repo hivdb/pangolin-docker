@@ -32,3 +32,6 @@ release: login
 	@docker push 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:latest
 	@docker push 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:${VERSION}
 	@echo ${VERSION} > .latest_version
+
+deploy:
+	@bash deploy.sh

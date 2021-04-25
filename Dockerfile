@@ -12,7 +12,7 @@ RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofast
     chmod +x /usr/bin/gofasta
 COPY pangolin pangolin
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLEARN_VER=2021-04-21
+ARG PANGOLEARN_VER=2021-04-23
 RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
         pangolin/ \
