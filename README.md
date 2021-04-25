@@ -113,7 +113,7 @@ function. Follow is the request format:
 
 ```json
 {
-  body: ">Wuhan/WH04/2020\nNNNN...."
+  "body": ">Wuhan/WH04/2020\nNNNN...."
 }
 ```
 
