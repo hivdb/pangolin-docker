@@ -7,8 +7,8 @@ ability to use AWS Lambda and S3 to host a serverless Pangolin web API.
 
 ## Preparation
 
-You need to have an AWS account and created dedicated instances for these two
-AWS service:
+An AWS account is required to create dedicated instances of these two AWS
+service:
 
 - A Lambda function
 - An S3 repository
@@ -35,7 +35,7 @@ have full access to the S3 repository. Here is an example of the policy:
 
 No addition policy is required for the S3 repository.
 
-You also need to have [Docker][docker] and [AWSCli (v2)][awscli] installed.
+[Docker][docker] and [AWSCli (v2)][awscli] is also required.
 
 
 ## Build
