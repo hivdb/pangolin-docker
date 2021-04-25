@@ -35,7 +35,7 @@ have full access to the S3 repository. Here is an example of the policy:
 
 No addition policy is required for the S3 repository.
 
-You also need to have [AWSCliv2][awscli] installed.
+You also need to have [Docker][docker] and [AWSCli (v2)][awscli] installed.
 
 
 ## Build
@@ -170,6 +170,7 @@ The format of the `<runHash>.json` is similar to the response payload.
 
 [pangolin-github]: https://github.com/cov-lineages/pangolin
 [pangolearn-github]: https://github.com/cov-lineages/pangoLEARN
+[docker]: https://docs.docker.com/get-docker/
 [awscli]: https://aws.amazon.com/cli/
 [aws-image-py38]: https://docs.aws.amazon.com/lambda/latest/dg/python-image.html#python-image-base
 [awscli-config]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
