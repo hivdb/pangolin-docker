@@ -35,8 +35,15 @@ def main(event, context):
     with open('/tmp/lineage-report.csv') as fp:
         rows = []
         for row in csv.DictReader(fp):
-            row['probability'] = float(row['probability'])
-            row.pop('pangoLEARN_version')
+            # explict list fields in case pangolin added more columns
+            rows.append({
+                'taxon': row['taxon'],
+                'lineage': row['lineage'],
+                'probability': 1 - float(row['conflict']),
+                'conflict': float(row['conflict']),
+                'status': row['status'],
+                'note': row['note'],
+            })
             rows.append(row)
         results['reports'] = rows
     body = json.dumps(results)
