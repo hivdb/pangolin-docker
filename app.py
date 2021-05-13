@@ -36,11 +36,17 @@ def main(event, context):
         rows = []
         for row in csv.DictReader(fp):
             # explict list fields in case pangolin added more columns
+            if row['conflict'] == 'NA':
+                conflict = None
+                probability = None
+            else:
+                conflict = float(row['conflict'])
+                probability = 1 - conflict
             rows.append({
                 'taxon': row['taxon'],
                 'lineage': row['lineage'],
-                'probability': 1 - float(row['conflict']),
-                'conflict': float(row['conflict']),
+                'probability': probability,
+                'conflict': conflict,
                 'status': row['status'],
                 'note': row['note'],
             })
