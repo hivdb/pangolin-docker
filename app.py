@@ -40,7 +40,10 @@ def main(event, context):
                 conflict = None
                 probability = None
             else:
-                conflict = float(row['conflict'])
+                try:
+                    conflict = float(row['conflict'])
+                except ValueError:
+                    conflict = 0
                 probability = 1 - conflict
             rows.append({
                 'taxon': row['taxon'],

@@ -12,11 +12,15 @@ RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofast
     chmod +x /usr/bin/gofasta
 COPY pangolin pangolin
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLEARN_VER=2021-05-11
+ARG PANGOLEARN_VER=refs/tags/2021-05-27
+ARG SCORPIO_VER=bb7847b25ca42c11b164a776cd21128f24694bb7
+ARG CONSTELLATIONS_VER=8a506d949b6d4590442e2dddfc6c64579286e953
 RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
         pangolin/ \
-        https://github.com/cov-lineages/pangoLEARN/archive/refs/tags/${PANGOLEARN_VER}.tar.gz
+        https://github.com/cov-lineages/pangoLEARN/archive/${PANGOLEARN_VER}.tar.gz \
+        https://github.com/cov-lineages/scorpio/archive/${SCORPIO_VER}.tar.gz \
+        https://github.com/cov-lineages/constellations/archive/${CONSTELLATIONS_VER}.tar.gz
 RUN mv /python-packages/bin /python-scripts
 
 FROM public.ecr.aws/lambda/python:3.8
@@ -27,6 +31,7 @@ COPY --from=installer /opt/minimap2 /opt/minimap2
 COPY --from=installer /usr/bin/minimap2 /usr/bin/gofasta /usr/bin/
 COPY --from=installer /python-scripts/ /var/lang/bin/
 COPY --from=installer /python-packages/ /var/lang/lib/python3.8/site-packages/
+RUN touch /usr/bin/usher && chmod +x /usr/bin/usher
 RUN pangolin -v > /pangolin_version.txt
 COPY app.py ./
 CMD ["app.main"]
