@@ -12,15 +12,17 @@ RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofast
     chmod +x /usr/bin/gofasta
 COPY pangolin pangolin
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLEARN_VER=refs/tags/2021-05-27
-ARG SCORPIO_VER=bb7847b25ca42c11b164a776cd21128f24694bb7
-ARG CONSTELLATIONS_VER=8a506d949b6d4590442e2dddfc6c64579286e953
+ARG PANGOLEARN_VER=refs/tags/2021-06-15
+ARG SCORPIO_VER=4da10c1ed15f4cad6e172de25f8a3c62ad2b2341
+ARG CONSTELLATIONS_VER=refs/tags/v0.0.5
+ARG PANGODEST_VER=refs/tags/v1.2.14
 RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
         pangolin/ \
         https://github.com/cov-lineages/pangoLEARN/archive/${PANGOLEARN_VER}.tar.gz \
         https://github.com/cov-lineages/scorpio/archive/${SCORPIO_VER}.tar.gz \
-        https://github.com/cov-lineages/constellations/archive/${CONSTELLATIONS_VER}.tar.gz
+        https://github.com/cov-lineages/constellations/archive/${CONSTELLATIONS_VER}.tar.gz \
+        https://github.com/cov-lineages/pango-designation/archive/${PANGODEST_VER}.tar.gz
 RUN mv /python-packages/bin /python-scripts
 
 FROM public.ecr.aws/lambda/python:3.8
