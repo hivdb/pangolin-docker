@@ -17,14 +17,6 @@ shell:
 		--volume $(PWD)/local:/local \
 		--entrypoint /bin/bash hivdb/pangolin-lambda:latest 
 
-shell2:
-	@docker pull covlineages/pangolin:latest
-	@docker run \
-		-it --rm \
-		--volume ~/.aws:/root/.aws:ro \
-		--volume $(PWD)/local:/local \
-		--entrypoint /bin/bash covlineages/pangolin:latest
-
 emulate:
 	@docker run \
 		--volume ~/.aws:/root/.aws:ro \
@@ -38,7 +30,7 @@ login:
 	@aws ecr get-login-password --region us-west-2 | \
 		docker login --username AWS --password-stdin 931437602538.dkr.ecr.us-west-2.amazonaws.com
 
-release: #login
+release: login
 	@docker tag hivdb/pangolin-lambda:latest 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:latest
 	@docker tag hivdb/pangolin-lambda:latest 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:${VERSION}
 	@docker push 931437602538.dkr.ecr.us-west-2.amazonaws.com/hivdb/pangolin-lambda:latest
