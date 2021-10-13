@@ -19,6 +19,7 @@ def main(event, context):
     proc = subprocess.run(
         ['/var/lang/bin/pangolin',
          '/tmp/input.fasta',
+         '--min-length', '3000',  # allow Spike-only sequence
          '-o', '/tmp',
          '--outfile', 'lineage-report.csv'],
         capture_output=True,

@@ -17,6 +17,14 @@ shell:
 		--volume $(PWD)/local:/local \
 		--entrypoint /bin/bash hivdb/pangolin-lambda:latest 
 
+shell2:
+	@docker pull covlineages/pangolin:latest
+	@docker run \
+		-it --rm \
+		--volume ~/.aws:/root/.aws:ro \
+		--volume $(PWD)/local:/local \
+		--entrypoint /bin/bash covlineages/pangolin:latest
+
 emulate:
 	@docker run \
 		--volume ~/.aws:/root/.aws:ro \
