@@ -36,12 +36,12 @@ RUN yum install -y which tar bzip2 && \
 ARG GOFASTA_VER=0.03
 RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofasta-linux-amd64 -o /usr/bin/gofasta && \
     chmod +x /usr/bin/gofasta
-ARG PANGOLIN_VER=refs/tags/v3.1.14
+ARG PANGOLIN_VER=refs/tags/v3.1.17
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLEARN_VER=refs/tags/2021-09-28
-ARG SCORPIO_VER=refs/tags/v0.3.12
-ARG CONSTELLATIONS_VER=refs/tags/v0.0.16
-ARG PANGODEST_VER=refs/tags/v1.2.86
+ARG PANGOLEARN_VER=refs/tags/2021-12-06
+ARG SCORPIO_VER=refs/tags/v0.3.16
+ARG CONSTELLATIONS_VER=refs/tags/v0.1.1
+ARG PANGODEST_VER=refs/tags/v1.2.123
 ARG PYSAM_VER=0.16.0.1
 RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
