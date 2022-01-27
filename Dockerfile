@@ -38,7 +38,7 @@ RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofast
     chmod +x /usr/bin/gofasta
 ARG PANGOLIN_VER=refs/tags/v3.1.17
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLEARN_VER=refs/tags/2021-12-06
+ARG PANGOLEARN_VER=refs/tags/2022-01-20
 ARG SCORPIO_VER=refs/tags/v0.3.16
 ARG CONSTELLATIONS_VER=refs/tags/v0.1.1
 ARG PANGODEST_VER=refs/tags/v1.2.123

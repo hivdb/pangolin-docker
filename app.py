@@ -53,7 +53,6 @@ def main(event, context):
                 'status': row['status'],
                 'note': row['note'],
             })
-            rows.append(row)
         results['reports'] = rows
     body = json.dumps(results)
     s3_client = boto3.client('s3')
