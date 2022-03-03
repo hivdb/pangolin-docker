@@ -26,7 +26,7 @@ RUN install /opt/usher/tbb_cmake_build/tbb_cmake_build_subdir_release/* /usr/lib
 
 FROM public.ecr.aws/lambda/python:3.8 as installer
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-ARG MINIMAP2_VER=2.17
+ARG MINIMAP2_VER=2.24
 RUN yum install -y which tar bzip2 && \
     mkdir -p /opt/minimap2 && \
     curl -sSL https://github.com/lh3/minimap2/releases/download/v${MINIMAP2_VER}/minimap2-${MINIMAP2_VER}_x64-linux.tar.bz2 -o minimap2.tar.bz2 && \
@@ -36,12 +36,12 @@ RUN yum install -y which tar bzip2 && \
 ARG GOFASTA_VER=0.03
 RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofasta-linux-amd64 -o /usr/bin/gofasta && \
     chmod +x /usr/bin/gofasta
-ARG PANGOLIN_VER=refs/tags/v3.1.17
+ARG PANGOLIN_VER=refs/tags/v3.1.20
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLEARN_VER=refs/tags/2022-01-20
+ARG PANGOLEARN_VER=refs/tags/2022-02-02
 ARG SCORPIO_VER=refs/tags/v0.3.16
-ARG CONSTELLATIONS_VER=refs/tags/v0.1.1
-ARG PANGODEST_VER=refs/tags/v1.2.123
+ARG CONSTELLATIONS_VER=refs/tags/v0.1.3
+ARG PANGODEST_VER=refs/tags/v1.2.126
 ARG PYSAM_VER=0.16.0.1
 RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
