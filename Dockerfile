@@ -38,7 +38,8 @@ RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofast
     chmod +x /usr/bin/gofasta
 RUN curl -sSL http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/faToVcf -o /usr/bin/faToVcf && \
     chmod +x /usr/bin/faToVcf
-ARG PANGOLIN_VER=refs/tags/v4.0
+# ARG PANGOLIN_VER=refs/tags/v4.0
+ARG PANGOLIN_VER=858cae5fbf638b67119fd066dc30e946309057a9
 ARG SNAKEMAKE_VER=5.13.0
 ARG PANGOLIN_DATA_VER=refs/tags/v1.2.133.2
 ARG SCORPIO_VER=refs/tags/v0.3.16
@@ -47,7 +48,7 @@ ARG PYSAM_VER=0.16.0.1
 RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
         pysam==${PYSAM_VER} \
-        https://github.com/cov-lineages/pangolin/archive/${PANGOLIN_VER}.tar.gz \
+        https://github.com/hivdb/pangolin/archive/${PANGOLIN_VER}.tar.gz \
         https://github.com/cov-lineages/pangolin-data/archive/${PANGOLIN_DATA_VER}.tar.gz \
         https://github.com/cov-lineages/scorpio/archive/${SCORPIO_VER}.tar.gz \
         https://github.com/cov-lineages/constellations/archive/${CONSTELLATIONS_VER}.tar.gz

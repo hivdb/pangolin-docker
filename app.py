@@ -12,10 +12,6 @@ from pangolin_data import __version__ as pangodata_version
 
 
 def main(event, context):
-    # still buggy: see https://github.com/aws/aws-sam-cli/issues/622
-    # fix this before we can deploy a 4.0 version, or we must stick with the
-    # older version
-    os.system('ln -s /proc/self/fd /dev/fd')
     version = 'pangolin: {}; pangolin-data: {}'.format(
         pangolin_version, pangodata_version)
     fasta = event.get('body') or ''
