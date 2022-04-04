@@ -1,3 +1,5 @@
+import os
+import sys
 import csv
 import json
 import boto3
@@ -10,6 +12,10 @@ from pangolin_data import __version__ as pangodata_version
 
 
 def main(event, context):
+    # still buggy: see https://github.com/aws/containers-roadmap/issues/1000
+    # fix this before we can deploy a 4.0 version, or we must stick with the
+    # older version
+    os.system('ln -s /proc/self/fd /dev/fd')
     version = 'pangolin: {}; pangolin-data: {}'.format(
         pangolin_version, pangodata_version)
     fasta = event.get('body') or ''
@@ -32,6 +38,8 @@ def main(event, context):
         "stdout": proc.stdout,
         "stderr": proc.stderr,
     }
+    if proc.stderr:
+        print(proc.stderr, file=sys.stderr)
     with open('/tmp/lineage-report.csv') as fp:
         rows = []
         for row in csv.DictReader(fp):
