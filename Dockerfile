@@ -36,21 +36,21 @@ RUN yum install -y which tar bzip2 && \
 ARG GOFASTA_VER=0.03
 RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofasta-linux-amd64 -o /usr/bin/gofasta && \
     chmod +x /usr/bin/gofasta
-ARG PANGOLIN_VER=refs/tags/v3.1.20
+RUN curl -sSL http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/faToVcf -o /usr/bin/faToVcf && \
+    chmod +x /usr/bin/faToVcf
+ARG PANGOLIN_VER=refs/tags/v4.0
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLEARN_VER=refs/tags/2022-02-02
+ARG PANGOLIN_DATA_VER=refs/tags/v1.2.133.2
 ARG SCORPIO_VER=refs/tags/v0.3.16
-ARG CONSTELLATIONS_VER=refs/tags/v0.1.3
-ARG PANGODEST_VER=refs/tags/v1.2.126
+ARG CONSTELLATIONS_VER=refs/tags/v0.1.4
 ARG PYSAM_VER=0.16.0.1
 RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
         pysam==${PYSAM_VER} \
         https://github.com/cov-lineages/pangolin/archive/${PANGOLIN_VER}.tar.gz \
-        https://github.com/cov-lineages/pangoLEARN/archive/${PANGOLEARN_VER}.tar.gz \
+        https://github.com/cov-lineages/pangolin-data/archive/${PANGOLIN_DATA_VER}.tar.gz \
         https://github.com/cov-lineages/scorpio/archive/${SCORPIO_VER}.tar.gz \
-        https://github.com/cov-lineages/constellations/archive/${CONSTELLATIONS_VER}.tar.gz \
-        https://github.com/cov-lineages/pango-designation/archive/${PANGODEST_VER}.tar.gz
+        https://github.com/cov-lineages/constellations/archive/${CONSTELLATIONS_VER}.tar.gz
 RUN mv /python-packages/bin /python-scripts
 
 FROM public.ecr.aws/lambda/python:3.8
@@ -58,7 +58,7 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
 COPY --from=installer /usr/bin/which /usr/bin/which
 COPY --from=installer /opt/minimap2 /opt/minimap2
-COPY --from=installer /usr/bin/minimap2 /usr/bin/gofasta /usr/bin/
+COPY --from=installer /usr/bin/minimap2 /usr/bin/gofasta /usr/bin/faToVcf /usr/bin/
 COPY --from=installer /python-scripts/ /var/lang/bin/
 COPY --from=installer /python-packages/ /var/lang/lib/python3.8/site-packages/
 COPY --from=usher-builder \

@@ -6,12 +6,12 @@ import subprocess
 from datetime import datetime
 
 from pangolin import __version__ as pangolin_version
-from pangoLEARN import __version__ as pangoLEARN_version
+from pangolin_data import __version__ as pangodata_version
 
 
 def main(event, context):
-    version = 'pangolin: {}; pangoLEARN: {}'.format(
-        pangolin_version, pangoLEARN_version)
+    version = 'pangolin: {}; pangolin-data: {}'.format(
+        pangolin_version, pangodata_version)
     fasta = event.get('body') or ''
     runhash = hashlib.sha512(fasta.encode('utf-8')).hexdigest()
     with open('/tmp/input.fasta', 'w') as fp:
@@ -50,7 +50,7 @@ def main(event, context):
                 'lineage': row['lineage'],
                 'probability': probability,
                 'conflict': conflict,
-                'status': row['status'],
+                'status': row['qc_status'],
                 'note': row['note'],
             })
         results['reports'] = rows
