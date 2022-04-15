@@ -36,28 +36,41 @@ def main(event, context):
     }
     if proc.stderr:
         print(proc.stderr, file=sys.stderr)
-    with open('/tmp/lineage-report.csv') as fp:
+    rows = []
+    if os.path.isfile('/tmp/lineage-report.csv'):
+        with open('/tmp/lineage-report.csv') as fp:
+            for row in csv.DictReader(fp):
+                # explict list fields in case pangolin added more columns
+                if row['conflict'] == 'NA':
+                    conflict = None
+                    probability = None
+                else:
+                    try:
+                        conflict = float(row['conflict'])
+                    except ValueError:
+                        conflict = 0
+                    probability = 1 - conflict
+                rows.append({
+                    'taxon': row['taxon'],
+                    'lineage': row['lineage'],
+                    'probability': probability,
+                    'conflict': conflict,
+                    'status': row['qc_status'],
+                    'note': row['note'],
+                })
+    else:
         rows = []
-        for row in csv.DictReader(fp):
-            # explict list fields in case pangolin added more columns
-            if row['conflict'] == 'NA':
-                conflict = None
-                probability = None
-            else:
-                try:
-                    conflict = float(row['conflict'])
-                except ValueError:
-                    conflict = 0
-                probability = 1 - conflict
-            rows.append({
-                'taxon': row['taxon'],
-                'lineage': row['lineage'],
-                'probability': probability,
-                'conflict': conflict,
-                'status': row['qc_status'],
-                'note': row['note'],
-            })
-        results['reports'] = rows
+        for line in fasta.splitlines():
+            if line.startswith('>'):
+                rows.append({
+                    'taxon': line[1:],
+                    'lineage': 'Unassigned',
+                    'probability': 1,
+                    'conflict': 0,
+                    'status': 'failed',
+                    'note': 'pangolin crashed'
+                })
+    results['reports'] = rows
     body = json.dumps(results)
     s3_client = boto3.client('s3')
     s3_client.put_object(
