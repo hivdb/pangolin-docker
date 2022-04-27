@@ -38,11 +38,11 @@ RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofast
     chmod +x /usr/bin/gofasta
 RUN curl -sSL http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/faToVcf -o /usr/bin/faToVcf && \
     chmod +x /usr/bin/faToVcf
-ARG PANGOLIN_VER=refs/tags/v4.0.5
+ARG PANGOLIN_VER=refs/tags/v4.0.6
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLIN_DATA_VER=refs/tags/v1.3
+ARG PANGOLIN_DATA_VER=refs/tags/v1.8
 ARG SCORPIO_VER=refs/tags/v0.3.17
-ARG CONSTELLATIONS_VER=refs/tags/v0.1.7
+ARG CONSTELLATIONS_VER=refs/tags/v0.1.8
 RUN pip install --target /python-packages \
         snakemake==${SNAKEMAKE_VER} \
         https://github.com/cov-lineages/pangolin/archive/${PANGOLIN_VER}.tar.gz \
