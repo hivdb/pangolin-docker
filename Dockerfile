@@ -60,9 +60,9 @@ RUN curl -sSL https://github.com/cov-ert/gofasta/releases/download/v0.0.3/gofast
 RUN curl -sSL http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/faToVcf -o /usr/bin/faToVcf && \
     chmod +x /usr/bin/faToVcf
 RUN pip install gitpython
-ARG PANGOLIN_VER=refs/tags/v4.1.2
+ARG PANGOLIN_VER=refs/tags/v4.1.3
 ARG SNAKEMAKE_VER=5.13.0
-ARG PANGOLIN_DATA_VER=refs/tags/v1.14
+ARG PANGOLIN_DATA_VER=refs/tags/v1.15.1
 ARG SCORPIO_VER=refs/tags/v0.3.17
 ARG CONSTELLATIONS_VER=refs/tags/v0.1.10
 RUN pip install --target /python-packages \
